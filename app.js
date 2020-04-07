@@ -23,8 +23,7 @@ app.use(express.static("public"));
 //database connection
 mongoose.connect("mongodb://localhost:27017/mangaldeepDB", {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false
+  useUnifiedTopology: true
 });
 
 
