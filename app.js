@@ -28,6 +28,17 @@ mongoose.connect("mongodb://localhost:27017/mangaldeepDB", {
 });
 
 
+
+const usersSchema = new mongoose.Schema({
+
+
+});
+
+
+const User = mongoose.model("User", usersSchema);
+
+
+
 //home route please put all get routes at a place
 app.get("/",function(req,res){
 
