@@ -29,13 +29,10 @@ mongoose.connect("mongodb://localhost:27017/mangaldeepDB", {
 
 
 
-const usersSchema = new mongoose.Schema({
+const usersSchema = new mongoose.Schema({});
 
 
-});
-
-
-const User = mongoose.model("User", usersSchema);
+const User = new mongoose.model("User", usersSchema);
 
 
 
