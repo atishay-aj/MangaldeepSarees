@@ -28,21 +28,54 @@ mongoose.connect("mongodb://localhost:27017/mangaldeepDB", {
 
 
 
-const usersSchema = new mongoose.Schema({});
+
+const usersSchema = new mongoose.Schema({
+name: String
 
 
-const User = new mongoose.model("User", usersSchema);
+});
+const User = mongoose.model("User", usersSchema);
+const user1 = new User({
+  name: "welcome to your to do list!!"
+});
+
+
+const user2 = new User({
+  name: " to your"
+});
+
+
+const user3 = new User({
+  name: "welcome!!"
+});
+
+const defaultItems = [user1, user2, user3];
+
+
+
+// User.insertMany(defaultItems, function(err)
+//  {
+//     if (err) {
+//       console.log("error occoured");
+//               }
+//     else {
+//     console.log("successfully added to database");
+//          }
+//
+// });
+
 
 
 
 //home route please put all get routes at a place
 app.get("/",function(req,res){
+  res.render("index");
 
 })
 
 
-app.get("/about",function(req,res){
-
+app.get("/compose",function(req,res){
+      res.render("compose");
 })
 
 
