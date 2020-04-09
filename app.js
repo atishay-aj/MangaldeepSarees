@@ -34,6 +34,7 @@ mongoose.connect("mongodb://localhost:27017/mangaldeepDB", {
 
 
 const composeSchema = new mongoose.Schema({
+  _id:String,
 	productName:String,
 	productDescription:String,
 	category:String,
@@ -50,14 +51,14 @@ const Saree = mongoose.model("Saree", composeSchema);
 //home route please put all get routes at a placeapp.get("/",function(req,res,next){
     app.get("/",function(req,res,next){
 
-Saree.findOne({productName:'1'},function(err,saree) {
+Saree.find({},function(err,sarees) {
   if (err) {
     console.log(err);
   } else {
     // console.log(saree.img.data);
     // res.contentType(saree.img.contentType);
-    const base64=saree.img.data.toString('base64');
-    res.render("index",{image1: base64});
+    // const base64=saree.img.data.toString('base64');
+    res.render("index",{sarees: sarees});
   }
 })
       // res.render("index");
@@ -95,6 +96,7 @@ app.post("/compose",upload.single('img'),function(req,res) {
    console.log(newImg);
 
      const saree = new Saree({
+        _id:req.body.productId,
      		productName:req.body.productName,
      		productDescription:req.body.productDescription,
      		category:req.body.category,
