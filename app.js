@@ -47,12 +47,12 @@ const Saree = mongoose.model("Saree", composeSchema);
 
 
 
-//home route please put all get routes at a place
-app.get("/",function(req,res,next){
-  
+//home route please put all get routes at a placeapp.get("/",function(req,res,next){
+    app.get("/",function(req,res,next){
+
 Saree.findOne({productName:'1'},function(err,saree) {
   if (err) {
-    console.log(err)
+    console.log(err);
   } else {
     // console.log(saree.img.data);
     // res.contentType(saree.img.contentType);
@@ -65,11 +65,13 @@ Saree.findOne({productName:'1'},function(err,saree) {
 
 
 app.get("/compose",function(req,res){
+
       res.render("compose");
 })
 
 
 app.get("/contact",function(req,res){
+
 
 })
 
@@ -87,7 +89,7 @@ app.post("/compose",upload.single('img'),function(req,res) {
    // If Submit was accidentally clicked with no file selected...
   console.log("no img selected");
   res.render("compose");
-}else{ 
+}else{
 	// read the img file from tmp in-memory location
    const newImg = fs.readFileSync(req.file.path);
    console.log(newImg);
@@ -98,7 +100,7 @@ app.post("/compose",upload.single('img'),function(req,res) {
      		category:req.body.category,
      		prize:req.body.prize,
      		pieces:req.body.pieces
-     		
+
      });
      	saree.img.data=newImg,
      	saree.img.contentType='image/*'
@@ -111,7 +113,7 @@ app.post("/compose",upload.single('img'),function(req,res) {
         })
      		res.redirect("/");
 
-        
+
      	}else{
      		console.log(err);
      	}
