@@ -48,10 +48,11 @@ const Saree = mongoose.model("Saree", composeSchema);
 
 
 //home route please put all get routes at a placeapp.get("/",function(req,res,next){
+    app.get("/",function(req,res,next){
 
 Saree.findOne({productName:'1'},function(err,saree) {
   if (err) {
-    console.log(err)
+    console.log(err);
   } else {
     // console.log(saree.img.data);
     // res.contentType(saree.img.contentType);
