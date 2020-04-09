@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const fs = require('fs');
 const multer  = require('multer');
 
-
+var title;
 //multer for file upload
 const upload = multer({ dest: 'uploads/' })
 // creating app constant
@@ -51,6 +51,7 @@ const Saree = mongoose.model("Saree", composeSchema);
 //home route please put all get routes at a placeapp.get("/",function(req,res,next){
     app.get("/",function(req,res,next){
 
+title = "Home";
 Saree.find({},function(err,sarees) {
   if (err) {
     console.log(err);
@@ -58,7 +59,7 @@ Saree.find({},function(err,sarees) {
     // console.log(saree.img.data);
     // res.contentType(saree.img.contentType);
     // const base64=saree.img.data.toString('base64');
-    res.render("index",{sarees: sarees});
+    res.render("index",{sarees: sarees,titleOf:title});
   }
 })
       // res.render("index");
@@ -66,14 +67,23 @@ Saree.find({},function(err,sarees) {
 
 
 app.get("/compose",function(req,res){
-
-      res.render("compose");
+  title = "Add Products";
+      res.render("compose",{titleOf:title});
 })
 
 
 app.get("/contact",function(req,res){
 
 
+})
+app.get("/register",function(req,res){
+  title = "Sign Up"
+  res.render("register",{titleOf:title});
+});
+
+app.get("/signin",function(req,res){
+  title = "Sign In"
+  res.render("login",{titleOf:title});
 })
 
 
@@ -123,6 +133,8 @@ app.post("/compose",upload.single('img'),function(req,res) {
  }
 
 });
+
+
 
 
 //listen port

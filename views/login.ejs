@@ -1,34 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>sign in </title>
-<meta property="og:image" content="/snippets/designs/elegant-modal-login-form-with-icons.png" />
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="fb:admins" content="100001054961582" />
-<meta property="fb:app_id" content="1404574483159557" />
-<link type="image/x-icon" href="/favicon.ico" rel="shortcut icon" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="https://kit.fontawesome.com/9ae18169e0.js" crossorigin="anonymous"></script>
-<style >
-.box{
-  width:400px;
-  height:auto;
-  margin-top:100px;
-  background-color: #ecfbfc;
-}
-</style>
-</head>
-<body class="text-center ">
-  <div class="container box">
+<%- include("partials/header"); -%>
+
+  <div class="container box box-register text-center mt-4 mb-4">
 
 
   <form class="text-center border border-light p-5" action="#!">
 
-      <p class="h4 mb-4">log in</p>
+      <p class="h4 mb-4">Log In</p>
 
       <!-- Email -->
       <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" required>
@@ -51,7 +28,7 @@
       </div>
 
       <!-- Sign in button -->
-      <button class="btn btn-info btn-block my-4" type="submit">log in</button>
+      <button class="btn btn-info btn-block my-4" type="submit">Log In</button>
 
       <!-- Register -->
       <p>Not a member?
@@ -59,15 +36,11 @@
       </p>
 
       <!-- Social login -->
-      <p>or sign in with:</p>
+      <p>or sign in with: <a href="#" class="mx-2" role="button"><i class="fab fa-google"></i></a></p>
 
-      <a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f light-blue-text"></i></a>
-      <a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>
-      <a href="#" class="mx-2" role="button"><i class="fab fa-linkedin-in light-blue-text"></i></a>
-      <a href="#" class="mx-2" role="button"><i class="fab fa-github light-blue-text"></i></a>
+
+
 
   </form>
   </div>
-  <!-- Default
-</body>
-</html>
+  <%- include("partials/footer"); -%>
