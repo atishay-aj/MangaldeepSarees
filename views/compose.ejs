@@ -1,73 +1,50 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, 	initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-      <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Gotu&family=Lobster&family=Righteous&display=swap" rel="stylesheet">
-     
-      <style>
-      h2{
-        color: #552244;
-      font-family: 'Righteous', cursive;
-      }
-      .color-text{
-        color: #552244;
-        font-family: 'Gotu', sans-serif;
-      }
-
-    </style>
-    
-  </head>
-  <body style="background-color:#f1f3f4">
-    <div class="container">
-  <h2>Add Products</h2>
-  <form action="/compose" method="POST" enctype="multipart/form-data" >
+<%- include("partials/header"); -%>
+<div class="container-fluid" style="background-color:#f1f3f4">
+  <h2 class="add-products">Add Products</h2>
+  <form action="/compose" method="POST" enctype="multipart/form-data">
     <div class="form-group">
-      <label for="pn"class="color-text">Product Name:</label>
+      <label for="pi" class="color-text">Product Id:</label>
+      <input type="text" class="form-control" id="pi" name="productId">
+    </div>
+    <div class="form-group">
+      <label for="pn" class="color-text">Product Name:</label>
       <input type="text" class="form-control" id="pn" name="productName">
     </div>
     <div class="form-group">
-      <label for="pd"class="color-text">Product Description:</label>
-      <textarea class="form-control" rows="5" id="pd" name="productDescription" ></textarea>
+      <label for="pd" class="color-text">Product Description:</label>
+      <textarea class="form-control" rows="5" id="pd" name="productDescription"></textarea>
     </div>
 
     <div class="form-group">
-      
+
       <div class="form-group">
-        <label for="cat"class="color-text">Product category</label>
+        <label for="cat" class="color-text">Product category</label>
         <select class="form-control" id="cat" name="category">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-          </select>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
       </div>
     </div>
+
     <div class="form-group">
-      <label for="pp"class="color-text">Prize:</label>
+      <label for="pp" class="color-text blockelement">Price:</label>
       <input type="text" id="pp" name="prize">
     </div>
 
     <div class="form-group">
-      <label for="pps"class="color-text">Pieces:</label>
+      <label for="pps" class="color-text blockelement">Pieces:</label>
       <input type="text" id="pps" name="pieces">
     </div>
 
     <div class="form-group">
-      <label for="imge"class="color-text">Select image:</label>
-    <input type="file" id="imge" name="img" accept="image/*">
+      <label for="imge" class="color-text">Select image:</label>
+      <input type="file" id="imge" name="img" accept="image/*">
     </div>
 
     <button type="submit" class="btn btn-success">Submit</button>
   </form>
 </div>
 
-
-  </body>
-</html>
+<%- include("partials/footer"); -%>
