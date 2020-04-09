@@ -4,8 +4,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const fs = require('fs');
+const multer  = require('multer');
 
 
+//multer for file upload
+const upload = multer({ dest: 'uploads/' })
 // creating app constant
 const app = express();
 
@@ -29,48 +33,34 @@ mongoose.connect("mongodb://localhost:27017/mangaldeepDB", {
 
 
 
-const usersSchema = new mongoose.Schema({
-name: String
-
-
+const composeSchema = new mongoose.Schema({
+	productName:String,
+	productDescription:String,
+	category:String,
+	prize:String,
+	pieces:String,
+	img:{data:Buffer,contentType:String }
 });
-const User = mongoose.model("User", usersSchema);
-const user1 = new User({
-  name: "welcome to your to do list!!"
-});
+const Saree = mongoose.model("Saree", composeSchema);
 
-
-const user2 = new User({
-  name: " to your"
-});
-
-
-const user3 = new User({
-  name: "welcome!!"
-});
-
-const defaultItems = [user1, user2, user3];
-
-
-
-// User.insertMany(defaultItems, function(err)
-//  {
-//     if (err) {
-//       console.log("error occoured");
-//               }
-//     else {
-//     console.log("successfully added to database");
-//          }
-//
-// });
 
 
 
 
 //home route please put all get routes at a place
-app.get("/",function(req,res){
-  res.render("index");
-
+app.get("/",function(req,res,next){
+  
+Saree.findOne({productName:'1'},function(err,saree) {
+  if (err) {
+    console.log(err)
+  } else {
+    // console.log(saree.img.data);
+    // res.contentType(saree.img.contentType);
+    const base64=saree.img.data.toString('base64');
+    res.render("index",{image1: base64});
+  }
+})
+      // res.render("index");
 })
 
 
@@ -90,6 +80,45 @@ app.get("/contact",function(req,res){
 app.post("/",function(req,res){
 
 })
+
+app.post("/compose",upload.single('img'),function(req,res) {
+	if (req.file == null) {
+		console.log(req.file.path);
+   // If Submit was accidentally clicked with no file selected...
+  console.log("no img selected");
+  res.render("compose");
+}else{ 
+	// read the img file from tmp in-memory location
+   const newImg = fs.readFileSync(req.file.path);
+   console.log(newImg);
+
+     const saree = new Saree({
+     		productName:req.body.productName,
+     		productDescription:req.body.productDescription,
+     		category:req.body.category,
+     		prize:req.body.prize,
+     		pieces:req.body.pieces
+     		
+     });
+     	saree.img.data=newImg,
+     	saree.img.contentType='image/*'
+
+     saree.save(function(err) {
+     	if(!err){
+
+        fs.unlinkSync(req.file.path,function(err) {
+          if(err){ console.log(err) };
+        })
+     		res.redirect("/");
+
+        
+     	}else{
+     		console.log(err);
+     	}
+     });
+ }
+
+});
 
 
 //listen port
