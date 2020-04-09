@@ -113,7 +113,7 @@ app.post("/compose",upload.single('img'),function(req,res) {
         fs.unlinkSync(req.file.path,function(err) {
           if(err){ console.log(err) };
         })
-     		res.redirect("/");
+     		res.redirect("/compose");
 
 
      	}else{

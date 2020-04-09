@@ -63,7 +63,7 @@ h2.add-products {
 
 /*  */
 
-
+/* styling of index.ejs */
 .carousel-indicators .li-1 {
     display: inline-block;
     width: 10px;
@@ -92,3 +92,8 @@ h2.add-products {
   background-color: black;
 
 }
+.card-img-top{
+  height: 20rem;
+}
+
+/*  */
