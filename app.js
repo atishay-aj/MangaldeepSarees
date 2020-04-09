@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 
+
 // creating app constant
 const app = express();
 
@@ -66,17 +67,21 @@ const defaultItems = [user1, user2, user3];
 
 //home route please put all get routes at a place
 app.get("/",function(req,res){
+
+
   res.render("index");
 
 })
 
 
 app.get("/compose",function(req,res){
+
       res.render("compose");
 })
 
 
 app.get("/contact",function(req,res){
+
 
 })
 
