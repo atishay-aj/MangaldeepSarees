@@ -103,6 +103,9 @@ app.get("/contact",function(req,res){
 
 
 })
+
+// route for signup
+
 app.get("/register",function(req,res){
   title = "Sign Up"
   res.render("register",{titleOf:title});
@@ -112,6 +115,7 @@ app.get("/login",function(req,res){
   title = "Sign In"
   res.render("login",{titleOf:title});
 })
+
 
 
 
