@@ -37,3 +37,12 @@ right: 25px;
 font-size: 36px;
 margin-left: 50px;
 }
+.footer{
+text-align: center;
+padding: 7% 15%;
+height: auto;
+background-color: #f8fab8;
+}
+.soicons{
+margin: 20px 10px;
+}
