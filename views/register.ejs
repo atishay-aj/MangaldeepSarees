@@ -1,19 +1,19 @@
-<%- include("partials/headerdummy"); -%>
+<%- include("partials/header"); -%>
 <div onclick="closeNav()" class="container-fluid">
 
 <div class="container box  box-register text-center mt-5 ">
 
 
-    <form class="text-center border border-light p-5" action="#!">
+    <form class="text-center border border-light p-5" action="/register" method="post">
 
       <p class="h4 mb-4">Sign up</p>
 
 
       <!-- Email -->
-      <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" required>
+      <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" name="username" required>
 
       <!-- Password -->
-      <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Create Password" required>
+      <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Create Password" name="password" required>
 
 
 

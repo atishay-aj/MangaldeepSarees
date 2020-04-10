@@ -73,12 +73,15 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
-
+var header="" ;
+var header1="";
 //home route please put all get routes at a placeapp.get("/",function(req,res,next){
-    app.get("/",function(req,res){
-
-title = "Home";
+   app.get("/",function(req,res) {
+    if (req.isAuthenticated()) {
+      console.log(req.user.username);
+      res.redirect("/user/"+req.user.username);
+    } else {
+      title = "Home";
 Saree.find({},function(err,sarees) {
   if (err) {
     console.log(err);
@@ -86,9 +89,57 @@ Saree.find({},function(err,sarees) {
     // console.log(saree.img.data);
     // res.contentType(saree.img.contentType);
     // const base64=saree.img.data.toString('base64');
-    res.render("index",{sarees: sarees,titleOf:title});
+    header='header'
+        res.render("index",{header:header,  sarees: sarees,titleOf:title});
+    
+    
   }
 })
+    }
+
+
+   })
+
+
+    app.get("/user/:query",function(req,res){
+if (req.isAuthenticated()) {
+    
+     const userid=req.params.query;
+  User.findOne({username:userid},function(err,user) {
+    if (!err) {
+      if (user) {
+        var foundid=user.username;
+        header1='headerdummy';
+        title = "Home";
+Saree.find({},function(err,sarees) {
+  if (err) {
+    console.log(err);
+  } else {
+    // console.log(saree.img.data);
+    // res.contentType(saree.img.contentType);
+    // const base64=saree.img.data.toString('base64');
+    if (header1=='headerdummy') {
+      // var foundid= req.params.query;
+       res.render("index",{header:header1,foundid:foundid,  sarees: sarees,titleOf:title});
+    } else {
+        res.render("index",{header:header1,  sarees: sarees,titleOf:title});
+    }
+    
+  }
+})
+      } else {
+        res.redirect("/login");
+      }
+    } else {
+      console.log(err);
+    }
+  })
+  } else {
+    res.redirect("/login");
+  }
+ 
+
+
       // res.render("index");
 })
 
@@ -116,7 +167,11 @@ app.get("/login",function(req,res){
   res.render("login",{titleOf:title});
 })
 
+app.get("/sarees/:sareeid",function(req,res) {
 
+
+
+});
 
 
 
@@ -135,7 +190,7 @@ app.post("/register",function(req,res){
       res.redirect("/register");
     } else {
       passport.authenticate("local")(req,res,function() {
-        res.redirect("/");
+        res.redirect("/user/"+req.body.username);
       })
     }
    })
@@ -158,7 +213,7 @@ app.post("/login",function(req,res) {
       console.log(err);
     }else{
       passport.authenticate("local")(req,res,function() {
-        res.redirect("/");
+        res.redirect("/user/"+req.body.username);
       });
     }
   })
@@ -167,7 +222,7 @@ app.post("/login",function(req,res) {
 app.get("/logout",function(req,res) {
   req.logout();
   req.session.destroy(function(err) {
-    res.redirect("/");
+    res.redirect("/login");
   })
   
 });
