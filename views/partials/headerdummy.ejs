@@ -10,29 +10,28 @@
   <link rel="icon" href="file:///C:/Users/jainr/Downloads/favicon.ico">
   <link rel="stylesheet" href="/css/styles.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <script type="text/javascript">
-      function openNav() {
-        document.getElementById("mySidenav").style.width = "150px";
-      }
+  <script type="text/javascript">
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "150px";
+    }
 
-      /* Set the width of the side navigation to 0 */
-      function closeNav(){
+    /* Set the width of the side navigation to 0 */
+    function closeNav() {
 
-            document.getElementById("mySidenav").style.width = "0";
-            }
-
-    </script>
-
+      document.getElementById("mySidenav").style.width = "0";
+    }
+  </script>
 
 
 
-    <script src="https://kit.fontawesome.com/19bdd19522.js" crossorigin="anonymous"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lobster&family=Pacifico&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/19bdd19522.js" crossorigin="anonymous"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Lobster&family=Pacifico&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
 
 
 </head>
@@ -40,13 +39,20 @@
 <body>
   <section id="navbar">
 
-      <nav class="navbar justify-content-start" style="border-bottom: 1px solid grey;font-size:15px;background-color: #faf4ff;">
+    <nav class="navbar justify-content-start" style="border-bottom: 1px solid grey;font-size:15px;background-color: #faf4ff;">
 
 
       <ul class="navbar-nav">
         <div id="mySidenav" class="sidenav" style="">
-          <a href="/login">LogIn</a>
-          <a href="/register">Register</a>
+          <div class="dropdown">
+            <a  class="dropdown-toggle" data-toggle="dropdown">
+              Account
+            </a>
+            <div class="dropdown-menu">
+              <p class="dropdown-item">abc@gmail.com </p>
+              <a class="dropdown-item" href="#" value="Log Out" style="background-color:#d9534f;border-radius:5%;font-size:1rem;">Log Out</a>
+            </div>
+          </div>
           <a href="/">Home</a>
           <a href="/contact">about</a>
 
@@ -71,7 +77,7 @@
 
       <ul class="navbar-nav mx-auto">
         <li class="nav-item ">
-          <a  href="#" class="navbar-brand" style="color: #fa163f;font-weight: 900;font-size: 40px; font-family: Ubuntu"><img src="/images/logoms.png" width="250px" height="60px" onclick="closeNav()"></a>
+          <a " href=" #" class="navbar-brand" style="color: #fa163f;font-weight: 900;font-size: 40px; font-family: Ubuntu"><img src="/images/logoms.png" width="250px" height="60px" onclick="closeNav()"></a>
         </li>
       </ul>
       <ul class="navbar-nav">
@@ -81,4 +87,3 @@
     </nav>
 
   </section>
-<div class="container-fluid" onclick="closenav()">

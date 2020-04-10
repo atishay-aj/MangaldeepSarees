@@ -1,18 +1,19 @@
-<%- include("partials/header"); -%>
+<%- include("partials/headerdummy"); -%>
+<div onclick="closeNav()" class="container-fluid">
 
 <div class="container box  box-register text-center mt-5 ">
 
 
-    <form class="text-center border border-light p-5" action="/register" method="post">
+    <form class="text-center border border-light p-5" action="#!">
 
       <p class="h4 mb-4">Sign up</p>
 
 
       <!-- Email -->
-      <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" name="username" required>
+      <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" required>
 
       <!-- Password -->
-      <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Create Password" name="password" required>
+      <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Create Password" required>
 
 
 
@@ -20,15 +21,12 @@
       <button class="btn btn-info btn-block my-4" type="submit">Sign up</button>
 
       <!-- Register -->
-
-      </form>
-      <!-- Social login -->
-      <p> sign in with:<a href="#" class="mx-2" role="button"><i class="fab fa-google"></i></a></p>
+      <p>already have an account? <a href="/login">Sign In</a> </p>
 
 
 
-
-    
+    </form>
+  </div>
   </div>
 
 
