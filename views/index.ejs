@@ -41,10 +41,10 @@
         <div class="card">
           <img class="card-img-top" src="data:image/*;base64,<%=saree.img.data.toString('base64'); %> " alt="Card image" style="width:100%">
           <div class="card-body">
-          <!-- for product name  <h2><%= %></h2> -->
-          <!-- for product discription limited letters<p><%=%></p> -->
+            <h2><%=saree.productName%> </h2>
+          <p><%=saree.productDescription.substring(0,50)+"..." %><a href="#">Read More</a> </p>
 
-          <!-- for product price <h3><%= %></h3> -->
+          <h3><%=saree.prize%></h3>
 
             <a href="#" class="btn btn-primary">Add to favorite</a>
           </div>

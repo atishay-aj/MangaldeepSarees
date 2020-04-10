@@ -3,15 +3,15 @@
   <div class="container box box-register text-center mt-4 mb-4">
 
 
-  <form class="text-center border border-light p-5" action="#!">
+  <form class="text-center border border-light p-5" action="/login" method="POST">
 
       <p class="h4 mb-4">Log In</p>
 
       <!-- Email -->
-      <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" required>
+      <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" name="username" required>
 
       <!-- Password -->
-      <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" required>
+      <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" name="password" required>
 
       <div class="d-flex justify-content-around">
           <div>
@@ -32,7 +32,7 @@
 
       <!-- Register -->
       <p>Not a member?
-          <a href="">Register</a>
+          <a href="/register">Register</a>
       </p>
 
       <!-- Social login -->
