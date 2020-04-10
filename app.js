@@ -3,16 +3,23 @@
 // requiring all the packages
 const express = require("express");
 const bodyParser = require("body-parser");
+const ejs=require('ejs');
 const mongoose = require("mongoose");
+const session=require('express-session');
+const passport=require('passport');
+const passportLocalMongoose=require('passport-local-mongoose');
+const nodemailer=require('nodemailer');
 const fs = require('fs');
 const multer  = require('multer');
+const Swal=require('sweetalert2');
 
 var title;
 //multer for file upload
 const upload = multer({ dest: 'uploads/' })
 // creating app constant
 const app = express();
-
+//using static css and image files which are in public folder
+app.use(express.static("public"));
 //view engine set ejs
 app.set('view engine', 'ejs');
 
@@ -21,17 +28,31 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-//using static css and image files which are in public folder
-app.use(express.static("public"));
+
+
+app.use(session({
+  secret: 'ourcompanysarsecret.',
+  resave: false,
+  saveUninitialized: false
+}))
+
+ app.use(passport.initialize());
+ app.use(passport.session());
 
 //database connection
 mongoose.connect("mongodb://localhost:27017/mangaldeepDB", {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex:true
 });
 
 
-
+const userSchema=new mongoose.Schema({
+  username:String,
+  password:String
+});
+userSchema.plugin(passportLocalMongoose);
+const User=new mongoose.model('User',userSchema);
 
 const composeSchema = new mongoose.Schema({
   _id:String,
@@ -42,14 +63,20 @@ const composeSchema = new mongoose.Schema({
 	pieces:String,
 	img:{data:Buffer,contentType:String }
 });
-const Saree = mongoose.model("Saree", composeSchema);
+const Saree = new mongoose.model("Saree", composeSchema);
 
 
+
+
+passport.use(User.createStrategy());
+ 
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 
 //home route please put all get routes at a placeapp.get("/",function(req,res,next){
-    app.get("/",function(req,res,next){
+    app.get("/",function(req,res){
 
 title = "Home";
 Saree.find({},function(err,sarees) {
@@ -81,7 +108,7 @@ app.get("/register",function(req,res){
   res.render("register",{titleOf:title});
 });
 
-app.get("/signin",function(req,res){
+app.get("/login",function(req,res){
   title = "Sign In"
   res.render("login",{titleOf:title});
 })
@@ -90,9 +117,56 @@ app.get("/signin",function(req,res){
 
 
 //post route for any form  all post routes here
-app.post("/",function(req,res){
+app.post("/register",function(req,res){
+  User.findOne({username:req.body.username},function(err,user) {
+    if (!err) {
+      if (user) {
 
-})
+        res.redirect("/login");
+      } else {
+
+        User.register({username:req.body.username},req.body.password,function(err,user) {
+    if (err) {
+      console.log(err);
+      res.redirect("/register");
+    } else {
+      passport.authenticate("local")(req,res,function() {
+        res.redirect("/");
+      })
+    }
+   })
+
+      }
+    } else if(err){
+      console.log(err);
+    }
+  })
+   
+});
+
+app.post("/login",function(req,res) {
+  const user =new User({
+    username:req.body.username,
+    password:req.body.password
+  });
+  req.login(user,function(err) {
+    if(err){
+      console.log(err);
+    }else{
+      passport.authenticate("local")(req,res,function() {
+        res.redirect("/");
+      });
+    }
+  })
+});
+
+app.get("/logout",function(req,res) {
+  req.logout();
+  req.session.destroy(function(err) {
+    res.redirect("/");
+  })
+  
+});
 
 app.post("/compose",upload.single('img'),function(req,res) {
 	if (req.file == null) {
@@ -101,6 +175,7 @@ app.post("/compose",upload.single('img'),function(req,res) {
   console.log("no img selected");
   res.render("compose");
 }else{
+
 	// read the img file from tmp in-memory location
    const newImg = fs.readFileSync(req.file.path);
    console.log(newImg);
@@ -116,21 +191,33 @@ app.post("/compose",upload.single('img'),function(req,res) {
      });
      	saree.img.data=newImg,
      	saree.img.contentType='image/*'
+  Saree.findById(req.body.productId,function(err,sareefound) {
+    if (sareefound) {
+     
+      res.redirect("/");
+    } else {
 
-     saree.save(function(err) {
-     	if(!err){
+      saree.save(function(err) {
+      if(!err){
 
-        fs.unlinkSync(req.file.path,function(err) {
-          if(err){ console.log(err) };
-        })
-     		res.redirect("/compose");
+        // fs.unlinkSync(req.file.path,function(err) {
+        //   if(err){ console.log(err) };
+        // })
+        res.redirect("/compose");
 
 
-     	}else{
-     		console.log(err);
-     	}
+      }else{
+        console.log(err);
+      }
      });
+    }
+  })
+
+ fs.unlinkSync(req.file.path,function(err) {
+    if (err) { console.log(err)};
+  })
  }
+
 
 });
 
@@ -138,6 +225,6 @@ app.post("/compose",upload.single('img'),function(req,res) {
 
 
 //listen port
-app.listen(3000, function() {
-  console.log("server is up and running on port 3000");
+app.listen(4000, function() {
+  console.log("server is up and running on port 4000");
 });
