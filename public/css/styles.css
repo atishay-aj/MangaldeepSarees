@@ -15,7 +15,7 @@
   /* Black*/
   overflow-x: hidden;
   /* Disable horizontal scroll */
-  padding-top: 60px;
+  padding-top: 30px;
   /* Place content 60px from the top */
   transition: 0.28s;
   /* 0.5 second transition effect to slide in the sidenav */
@@ -23,12 +23,14 @@
 
 /* The navigation menu links */
 .sidenav a {
+  position: relative;
   padding: 8px 8px 8px 32px;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 20px;
   color: #818181;
   display: block;
   transition: 0.3s;
+  z-index: 1;
 }
 
 /* When you mouse over the navigation links, change their color */
@@ -36,13 +38,9 @@
   color: #f1f1f1;
 }
 
-/* Position and style the close button (top right corner) */
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+
+.navbar{
+  height: 80px;
 }
 
 /*  */
@@ -113,12 +111,42 @@ h2.add-products {
   color: transparent;
   -webkit-text-fill-color: transparent;
 }
+
+/*  */
+/* footer file styling */
 .footer{
 text-align: center;
-padding: 7% 15%;
-height: auto;
-background-color: #f8fab8;
+padding: 3% 0%;
+height: 100px;
+background-color: #FAF4FF;
+}
+footering{
+
+
+
 }
 .soicons{
-margin: 20px 10px;
+margin: 10px 8px;
+}
+.copyright{
+  margin-bottom: 0%;
+}
+.fa-facebook {
+  color: #3b5998;
+  background-image: linear-gradient( to bottom, transparent 20%, white 20%, white 93%, transparent 93% );
+  background-size: 55%;
+  background-position: 70% 0;
+  background-repeat: no-repeat;
+}
+.fa-twitter {
+    color: black;
+    text-shadow: 1px 1px 1px #ccc;
+    font-size: 1.2em;
+}
+.fa-instagram {
+  color: transparent;
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  background: -webkit-radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  background-clip: text;
+  -webkit-background-clip: text;
 }
