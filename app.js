@@ -69,7 +69,7 @@ const Saree = new mongoose.model("Saree", composeSchema);
 
 
 passport.use(User.createStrategy());
- 
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -145,7 +145,7 @@ app.post("/register",function(req,res){
       console.log(err);
     }
   })
-   
+
 });
 
 app.post("/login",function(req,res) {
@@ -169,7 +169,7 @@ app.get("/logout",function(req,res) {
   req.session.destroy(function(err) {
     res.redirect("/");
   })
-  
+
 });
 
 app.post("/compose",upload.single('img'),function(req,res) {
@@ -197,7 +197,7 @@ app.post("/compose",upload.single('img'),function(req,res) {
      	saree.img.contentType='image/*'
   Saree.findById(req.body.productId,function(err,sareefound) {
     if (sareefound) {
-     
+
       res.redirect("/");
     } else {
 
