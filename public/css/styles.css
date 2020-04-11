@@ -96,10 +96,10 @@ h2.add-products {
 
 /*  */
 
-.box-register {
-  width: 400px;
+.rishabh {
+  width: 100px;
   height: auto;
-  margin-top: 100px;
+  margin-top: 0px;
   background-color: #ecfbfc;
 }
 
@@ -153,7 +153,6 @@ margin: 10px 8px;
 
 
 /* styling of productdes.ejs */
-
 .productDescription {
   font-family: 'open sans';
   overflow-x: hidden; }
@@ -332,5 +331,7 @@ margin: 10px 8px;
 #pic-1{
   border-radius: 3%;
 }
+
+
 
 /* here it ended */
