@@ -65,8 +65,14 @@ const composeSchema = new mongoose.Schema({
 });
 const Saree = new mongoose.model("Saree", composeSchema);
 
-
-
+const itemsSchema ={
+  name:String
+};
+const listSchema={
+  name:String,
+  items:[String]
+};
+const Userlikes= new mongoose.model("Userlikes",listSchema);
 
 passport.use(User.createStrategy());
 
@@ -81,7 +87,7 @@ var header1="";
       console.log(req.user.username);
       res.redirect("/user/"+req.user.username);
     } else {
-      title = "Home";
+      title = "MD-Home";
 Saree.find({},function(err,sarees) {
   if (err) {
     console.log(err);
@@ -110,7 +116,7 @@ if (req.isAuthenticated()) {
       if (user) {
         var foundid=user.username;
         header1='headerdummy';
-        title = "Home";
+        title = "MD-Home";
 Saree.find({},function(err,sarees) {
   if (err) {
     console.log(err);
@@ -145,12 +151,22 @@ Saree.find({},function(err,sarees) {
 
 
 app.get("/compose",function(req,res){
-  title = "Add Products";
+  title = "MD-Add Products";
       res.render("compose",{titleOf:title});
 })
 
 
 app.get("/contact",function(req,res){
+  if (req.isAuthenticated()) {
+     header1='headerdummy';
+     foundid=req.user.username;
+     title='MD-about'
+    res.render("about",{header:header1,foundid:foundid,titleOf:title} );
+  } else {
+    header1='header';
+    title='MD-about'
+    res.render("about",{header:header1,titleOf:title} );
+  }
 
 
 })
@@ -158,22 +174,149 @@ app.get("/contact",function(req,res){
 // route for signup
 
 app.get("/register",function(req,res){
-  title = "Sign Up"
+
+if (req.isAuthenticated()) {
+    res.redirect("/user/"+req.user.username);
+  } else {
+     title = "Sign Up"
   res.render("register",{titleOf:title});
+  }
+
+
 });
 
 app.get("/login",function(req,res){
-  title = "Sign In"
+  if (req.isAuthenticated()) {
+    res.redirect("/user/"+req.user.username);
+  } else {
+     title = "MD-Sign In"
   res.render("login",{titleOf:title});
+  }
+
 })
 
 app.get("/sarees/:sareeid",function(req,res) {
 
+    var sareeimg;
+    var productName;
+    var productDescription;
+    var category;
+    var prize;
+    var pieces;
+  Saree.findById(req.params.sareeid,function(err,saree) {
+
+      sareeimg=saree.img.data.toString('base64');
+      productName=saree.productName;
+      productDescription=saree.productDescription;
+      category=saree.category;
+      prize=saree.prize;
+      pieces=saree.pieces;
+      // console.log(productDescription);
+
+      if (req.isAuthenticated()) {
+     header1='headerdummy';
+     foundid=req.user.username;
+     title='MD-productDes';
+
+    res.render("productDes",{
+      header:header1,
+      foundid:foundid,
+      titleOf:title,
+      sareeimg:sareeimg,
+      productName:productName,
+      productDescription:productDescription,
+      category:category,
+      prize:prize,
+      pieces:pieces
+    });
+  } else {
+    // console.log(productDescription);
+    header1='header';
+    title='MD-productDes'
+    res.render("productDes",{
+      header:header1,
+      titleOf:title,
+      sareeimg:sareeimg,
+      productName:productName,
+      productDescription:productDescription,
+      category:category,
+      prize:prize,
+      pieces:pieces
+    });
+  }
+  })
 
 
 });
 
+app.get("/userlike/:sareeid",function(req,res) {
+  if (req.isAuthenticated()) {
+    const user=req.user.username;
+    const sareeid=req.params.sareeid;
 
+    Userlikes.findOne({name:user},function(err,foundList) {
+      if (!err) {
+        if (!foundList) {
+          const userlike = new Userlikes({
+            name:user,
+            items:[sareeid]
+          });
+          userlike.save();
+          res.redirect("/");
+        } else {
+          foundList.items.push(sareeid);
+          foundList.save();
+          res.redirect("/");
+        }
+      } else {
+        console.log(err);
+      }
+
+    })
+
+  } else {
+    res.redirect("/register");
+  }
+})
+
+app.get("/cart",function(req,res) {
+    if (req.isAuthenticated()) {
+      const user=req.user.username;
+    Userlikes.findOne({name:user},function(err,foundList) {
+      if (err) {
+        console.log(err);
+        res.redirect("/");
+      } else {
+        try{
+        if (foundList.items) {
+
+          console.log(foundList.items);
+          Saree.find().where('_id').in(foundList.items).exec((err, records) => {
+            console.log(records);
+            res.render("sessionindex",{
+              titleOf:'MD-cart',
+              foundid:foundList.name,
+              sarees:records
+            });
+          });
+        }
+      }catch(error){
+        res.redirect("/");
+      }
+
+
+
+
+
+      }
+
+    })
+
+  } else {
+    res.redirect("/login");
+  }
+
+})
 
 //post route for any form  all post routes here
 app.post("/register",function(req,res){
@@ -209,10 +352,10 @@ app.post("/login",function(req,res) {
     password:req.body.password
   });
   // req.login(user,function(err) {
-    // if(err){
-      // console.log(err);
-    // }else{
-      passport.authenticate("local")(req,res,function(){
+  //   if(err){
+  //     console.log(err);
+  //   }else{
+      passport.authenticate("local")(req,res,function() {
         res.redirect("/user/"+req.body.username);
       });
     // }
