@@ -158,13 +158,25 @@ app.get("/contact",function(req,res){
 // route for signup
 
 app.get("/register",function(req,res){
-  title = "Sign Up"
+
+if (req.isAuthenticated()) {
+    res.redirect("/user/"+req.user.username);
+  } else {
+     title = "Sign Up"
   res.render("register",{titleOf:title});
+  }
+
+  
 });
 
 app.get("/login",function(req,res){
-  title = "Sign In"
+  if (req.isAuthenticated()) {
+    res.redirect("/user/"+req.user.username);
+  } else {
+     title = "Sign In"
   res.render("login",{titleOf:title});
+  }
+ 
 })
 
 app.get("/sarees/:sareeid",function(req,res) {
