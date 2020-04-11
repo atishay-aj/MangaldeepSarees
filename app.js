@@ -91,8 +91,8 @@ Saree.find({},function(err,sarees) {
     // const base64=saree.img.data.toString('base64');
     header='header'
         res.render("index",{header:header,  sarees: sarees,titleOf:title});
-    
-    
+
+
   }
 })
     }
@@ -103,7 +103,7 @@ Saree.find({},function(err,sarees) {
 
     app.get("/user/:query",function(req,res){
 if (req.isAuthenticated()) {
-    
+
      const userid=req.params.query;
   User.findOne({username:userid},function(err,user) {
     if (!err) {
@@ -124,7 +124,7 @@ Saree.find({},function(err,sarees) {
     } else {
         res.render("index",{header:header1,  sarees: sarees,titleOf:title});
     }
-    
+
   }
 })
       } else {
@@ -137,7 +137,7 @@ Saree.find({},function(err,sarees) {
   } else {
     res.redirect("/login");
   }
- 
+
 
 
       // res.render("index");
@@ -208,15 +208,15 @@ app.post("/login",function(req,res) {
     username:req.body.username,
     password:req.body.password
   });
-  req.login(user,function(err) {
-    if(err){
-      console.log(err);
-    }else{
-      passport.authenticate("local")(req,res,function() {
+  // req.login(user,function(err) {
+    // if(err){
+      // console.log(err);
+    // }else{
+      passport.authenticate("local")(req,res,function(){
         res.redirect("/user/"+req.body.username);
       });
-    }
-  })
+    // }
+  // })
 });
 
 app.get("/logout",function(req,res) {
