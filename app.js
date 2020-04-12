@@ -17,4 +17,9 @@ app.get("/delete/:deleteid",function(req,res){Userlikes.findOneAndUpdate({name:r
 {console.log(foundList.items.length);if(foundList.items&&foundList.items.constructor===Array&&foundList.items.length===0){res.render("empty",{titleOf:'MD-emptyCart',foundid:req.user.username});}
 else{res.redirect("/cart");}}})});app.post("/register",function(req,res){User.findOne({username:req.body.username},function(err,user){if(!err){if(user){res.redirect("/login");}else{User.register({username:req.body.username},req.body.password,function(err,user){if(err){console.log(err);res.redirect("/register");}else{passport.authenticate("local")(req,res,function(){res.redirect("/user/"+req.body.username);})}})}}else if(err){console.log(err);}})});app.post("/login",function(req,res){const user=new User({username:req.body.username,password:req.body.password});passport.authenticate("local")(req,res,function(){res.redirect("/user/"+req.body.username);});});app.get("/logout",function(req,res){req.logout();req.session.destroy(function(err){res.redirect("/login");})});app.post("/compose",upload.single('img'),function(req,res){if(req.file==null){console.log(req.file.path);console.log("no img selected");res.render("compose");}else{const newImg=fs.readFileSync(req.file.path);console.log(newImg);const saree=new Saree({_id:req.body.productId,productName:req.body.productName,productDescription:req.body.productDescription,category:req.body.category,prize:req.body.prize,pieces:req.body.pieces});saree.img.data=newImg,saree.img.contentType='image/*'
 Saree.findById(req.body.productId,function(err,sareefound){if(sareefound){res.redirect("/");}else{saree.save(function(err){if(!err){res.redirect("/compose");}else{console.log(err);}});}})
-fs.unlinkSync(req.file.path,function(err){if(err){console.log(err)};})}});app.listen(4000,function(){console.log("server is up and running on port 4000");});
+fs.unlinkSync(req.file.path,function(err){if(err){console.log(err)};})}});
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 4000;
+}
+app.listen(port,function(){console.log("server is up and running successfully");});
