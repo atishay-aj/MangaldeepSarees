@@ -1,6 +1,6 @@
 <%- include("partials/header"); -%>
-<div onclick="closeNav()" class="container rishabh" style="width:400px">
-<div class="container box text-center mt-5 mb-5">
+
+<div class="container rishabh box text-center mt-5 mb-5" style="width:400px" onclick="closeNav()">
 <form class="text-center border border-light p-5" action="/register" method="post">
 <p class="h4 mb-4">Sign up</p>
 <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" name="username" required autocomplete="off">
@@ -8,6 +8,5 @@
 <button class="btn btn-info btn-block my-4" type="submit">Sign up</button>
 <p>already have an account? <a href="/login">Sign In</a> </p>
 </form>
-</div>
 </div>
 <%- include("partials/footer"); -%>
