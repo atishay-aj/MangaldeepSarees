@@ -1,50 +1,43 @@
 <%- include("partials/header"); -%>
 <div class="container-fluid" style="background-color:#f1f3f4" onclick="closeNav()">
-  <h2 class="add-products">Add Products</h2>
-  <form action="/compose" method="POST" enctype="multipart/form-data">
-    <div class="form-group">
-      <label for="pi" class="color-text">Product Id:</label>
-      <input type="text" class="form-control" id="pi" name="productId" required minlength="3">
-    </div>
-    <div class="form-group">
-      <label for="pn" class="color-text">Product Name:</label>
-      <input type="text" class="form-control" id="pn" name="productName" required minlength="8" maxlength="20">
-    </div>
-    <div class="form-group">
-      <label for="pd" class="color-text">Product Description:</label>
-      <textarea class="form-control" rows="5" minlength="50" id="pd" name="productDescription" required></textarea>
-    </div>
-
-    <div class="form-group">
-
-      <div class="form-group">
-        <label for="cat" class="color-text">Product category</label>
-        <select class="form-control" id="cat" name="category">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="pp" class="color-text blockelement">Price:</label>
-      <input type="text" id="pp" name="prize" required>
-    </div>
-
-    <div class="form-group">
-      <label for="pps" class="color-text blockelement">Pieces:</label>
-      <input type="text" id="pps" name="pieces" required>
-    </div>
-
-    <div class="form-group">
-      <label for="imge" class="color-text">Select image:</label>
-      <input type="file" id="imge" name="img" accept="image/*" max-size="2000">
-    </div>
-
-    <button type="submit" class="btn btn-success">Submit</button>
-  </form>
+<h2 class="add-products">Add Products</h2>
+<form action="/compose" method="POST" enctype="multipart/form-data">
+<div class="form-group">
+<label for="pi" class="color-text">Product Id:</label>
+<input type="text" class="form-control" id="pi" name="productId" required minlength="3">
 </div>
-
+<div class="form-group">
+<label for="pn" class="color-text">Product Name:</label>
+<input type="text" class="form-control" id="pn" name="productName" required minlength="8" maxlength="20">
+</div>
+<div class="form-group">
+<label for="pd" class="color-text">Product Description:</label>
+<textarea class="form-control" rows="5" minlength="20" id="pd" name="productDescription" required></textarea>
+</div>
+<div class="form-group">
+<div class="form-group">
+<label for="cat" class="color-text">Product category</label>
+<select class="form-control" id="cat" name="category">
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
+</select>
+</div>
+</div>
+<div class="form-group">
+<label for="pp" class="color-text blockelement">Price:</label>
+<input type="num" id="pp" name="prize" required>
+</div>
+<div class="form-group">
+<label for="pps" class="color-text blockelement">Pieces:</label>
+<input type="text" id="pps" name="pieces" required>
+</div>
+<div class="form-group">
+<label for="imge" class="color-text">Select image:</label>
+<input type="file" id="imge" name="img" accept="image/*" max-size="2000">
+</div>
+<button type="submit" class="btn btn-success">Submit</button>
+</form>
+</div>
 <%- include("partials/footer"); -%>

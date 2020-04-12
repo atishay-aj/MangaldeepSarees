@@ -1,60 +1,21 @@
 <%- include("partials/headerdummy"); -%>
-<section id="carousel" onclick="closeNav()" style="position:relative;z-index:0;">
-  <div id="demo" class="carousel slide" data-ride="carousel">
-
-    <!-- Indicators -->
-    <ul class="carousel-indicators">
-      <li data-target="#demo" data-slide-to="0" class=" li-1"></li>
-      <li data-target="#demo" data-slide-to="1" class="active li-1"></li>
-      <li data-target="#demo" data-slide-to="2" class=" li-1"></li>
-    </ul>
-
-    <!-- The slideshow -->
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="/images/carousel1.jpg" alt="Los Angeles" style="max-width:100%; height:auto;margin-right:auto; margin-left:auto;display:block;">
-      </div>
-      <div class="carousel-item">
-        <img src="/images/carousel2.jpg" alt="Chicago" style="max-width:100%; height:auto;margin-right:auto; margin-left:auto;display:block;">
-      </div>
-      <div class="carousel-item">
-        <img src="/images/carousel3.jpg" alt="New York" style="max-width:100%; height:auto; margin-right:auto; margin-left:auto;display:block;">
-      </div>
-    </div>
-
-    <!-- Left and right controls -->
-    <a class="carousel-control-prev" href="#demo" data-slide="prev" >
-      <span class="carousel-control-prev-icon" ></span>
-    </a>
-    <a class="carousel-control-next" href="#demo" data-slide="next">
-      <span class="carousel-control-next-icon"></span>
-    </a>
-  </div>
-</section>
-
 <section id="items">
-    <div class="row justify-content-center">
-
-  <% sarees.forEach(function(saree) { %>
-      <div class="col-6 col-sm-4 pt-2 d-flex align-items-stretch">
-        <div class="container ">
-          <div class="card" style="background-color:#FAF4FF; height:31rem;border-radius:3%">
-            <a href="#"><img class="card-img-top" src="data:image/*;base64,<%=saree.img.data.toString('base64'); %> " alt="Card image" style="width:100%"></a>
-            <div class="card-body mt-0 pt-0 ">
-              <a href="#" style="color:#C71E17;"><h5 class="pt-0 mt-0" style="color:#C71E17;text-align: center; font-weight:700"><%=saree.productName%> </h5></a>
-            <p style="text-align:center;font-weight:500;"><%=saree.productDescription.substring(0,50)+"..." %></p>
-
-            <h3 style="color:black;font-weight:500;">&#x20b9;<%=saree.prize%>  <a href="#" style="color:#a83f39; font-size:25px; float:right">Like <i class="fas fa-heart" ></i></a></h3>
-
-
-
-            </div>
-          </div>
-        </div>
-      </div>
-  <% }) %>
-  </div>
-
+<h2 class="pt-5 pb-5 text-center" style="text-align:center">Cart<i class="fas fa-shopping-cart fa-lg"></i></h2>
+<div class="row justify-content-center">
+<% sarees.forEach(function(saree) { %>
+<div class="col-6 col-md-4 pt-2 d-flex">
+<div class="card" style="background-color:#faf4ff;height:30rem;border-radius:3% width:100%">
+<a href="/sarees/<%=saree._id%>"><img class="card-img-top" src="data:image/*;base64,<%=saree.img.data.toString('base64'); %> " alt="Saree image" style="width:100%"></a>
+<div class="card-body mt-0 pt-0">
+<a href="/sarees/<%=saree._id%>" style="color:#C71E17"><h5 class="pt-0 mt-0" style="color:#c71e17;text-align:center;font-weight:700"><%=saree.productName%> </h5></a>
+<p style="text-align:center;font-weight:500"><%=saree.productDescription.substring(0,20) %></p>
+<h5 class="pt-4 ml-0" style="color:black;font-weight:500;display:inline">&#x20b9;<%=saree.prize%></h5>
+<a href="/delete/<%=saree._id%>" style="color:#a83f39;font-size:20px;float:right">Remove <i class="fas fa-trash-alt"></i></a>
+</div>
+<a href="tel:+919214555250" class="btn btn-dark">contact us</a>
+</div>
+</div>
+<% }) %>
+</div>
 </section>
-
 <%- include("partials/footer"); -%>

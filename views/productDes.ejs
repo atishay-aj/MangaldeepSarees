@@ -3,41 +3,32 @@
 <%}else {%>
 <%- include("partials/headerdummy"); -%>
 <%}%>
-  <div class="productDescription">
-
-	<div class="container">
-		<div class="card skj-1">
-			<div class="container-fluid">
-				<div class="wrapper row">
-					<div class="preview col-md-6">
-
-						<div class="preview-pic tab-content">
-						  <div class="tab-pane active" id="pic-1"><img src="data:image/*;base64,<%=sareeimg%> " height="450px"></div>
-
-						</div>
-
-					</div>
-					<div class="details col-md-6">
-            <!--here dynamic product name comes-->
-						<h3 class="product-title"><%=productName%></h3>
-<!--here dynamic description comes-->
-						<p class="product-description"><%=productDescription%></p>
-						<h4 class="price">current price: <span><!-- idhr dynamic money--><%=prize%></span></h4>
-            
-
-						<h5 class="sizes">Category:
-							<span class="size" data-toggle="tooltip" title="category"><%=category%><!--here category from database comes --></span>
-
-						</h5>
-						<h5 class="colors">pieces:
-							<span class=" " data-toggle="tooltip" title=""><!-- pieces from database--><%=pieces%></span>
-
-						</h5>
-						
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="productDescription">
+<div class="container">
+<div class="card skj-1" style="background-color:#ECFBFC">
+<div class="container-fluid">
+<div class="wrapper row">
+<div class="preview col-md-6">
+<div class="preview-pic tab-content">
+<div class="tab-pane active" id="pic-1"><img src="data:image/*;base64,<%=sareeimg%> " height="450px" alt="Saree image"></div>
+</div>
+</div>
+<div class="details col-md-6" onclick="closeNav()">
+<h3 class="product-title"><%=productName%></h3>
+<h6 class="price">Price: <span>&#x20b9;<%=prize%></span></h6>
+<h5 class="sizes">Category: <span class="" data-toggle="tooltip" title="category"><%=category%></span>
+</h5>
+<h5 class="colors">pieces:
+<span class="" data-toggle="tooltip" title=""><%=pieces%></span>
+</h5>
+<p class="product-description"><span style="font-weight:bold;font-size:30px">Discription:</span><br><%=productDescription%></p>
+<p class="text-center"> <a href="/userlike/<%=sid%>" class="btn btn-danger btn-sm" style="color:#fff;font-size:20px;float:left display:inline">ADD<i class="fas fa-cart-plus"></i></a>
+<a href="tel:+919214555250" class="btn btn-primary">contact us</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <%- include("partials/footer"); -%>
