@@ -1,11 +1,11 @@
 <%- include("partials/headerdummy"); -%>
-<section id="items">
+<section id="items" onclick="closeNav()">
 <h2 class="pt-5 pb-5 text-center" style="text-align:center">Cart<i class="fas fa-shopping-cart fa-lg"></i></h2>
 <div class="row justify-content-center">
 
 <% sarees.forEach(function(saree) { %>
 <div class="col-6 col-md-4 pl-0 pr-0 d-flex align-items-stretch">
-<div class="card" style="background-color:#faf4ff;height:31rem;border-radius:0%;">
+<div class="card" style="background-color:#fff;height:31rem;border-radius:0%;">
 <a href="/sarees/<%=saree._id%>"><img class="card-img-top" src="data:image/*;base64,<%=saree.img.data.toString('base64'); %> " alt="Saree image" style="width:100%"></a>
 <div class="card-body mt-0 pt-0">
   <a href="/sarees/<%=saree._id%>" class="pb-0" style="color:black;white-space: nowrap; font-size:20px;padding:0px;margin:0px;"><p class="pt-0 mt-0"><%=saree.productName%> </p></a>
