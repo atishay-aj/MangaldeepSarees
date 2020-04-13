@@ -3,32 +3,26 @@
 <%}else {%>
 <%- include("partials/headerdummy"); -%>
 <%}%>
-<div class="productDescription">
-<div class="container">
-<div class="card skj-1" style="background-color:#ECFBFC">
-<div class="container-fluid">
-<div class="wrapper row">
-<div class="preview col-md-6">
-<div class="preview-pic tab-content">
-<div class="tab-pane active" id="pic-1"><img src="data:image/*;base64,<%=sareeimg%> " height="450px" alt="Saree image"></div>
+<div class="card pdp p-0 m-0" onclick="closeNav();">
+  <img class="card-image-top" src="data:image/*;base64,<%=sareeimg%> " width="100%" alt="Saree image">
+  <div class="card-body mt-0 pt-0">
+    <p class="product-title"><%=productName%></p>
+    <p class="price mt-2">&#x20b9;850<%=prize%></p>
+    <p class="tex  mt-n4">inclusive of all texes</p>
+    </div>
 </div>
+
+<div class="card saree-details-card">
+  <div class="card-body">
+    <p class="card-title sare-details-p">Saree Details:</p>
+
+      <p class="sizes ">Fabric:<%=category%></p>
+        <p class="colors">Colours:<%=pieces%></p>
+          <p class="product-description mt-0"> <%=productDescription%></p>
+          <p class="text-center"> <a href="/userlike/<%=sid%>" class="btn btn-danger" style="color:#fff;font-size:20px;float:left display:inline">WishList <i class="fas fa-bookmark "></i></a>
+          <a href="tel:+919214555250" class="btn btn-primary" style="color:#fff;font-size:20px;">contact us</a>
+
+  </div>
 </div>
-<div class="details col-md-6" onclick="closeNav()">
-<h3 class="product-title"><%=productName%></h3>
-<h6 class="price">Price: <span>&#x20b9;<%=prize%></span></h6>
-<h5 class="sizes">Category: <span class="" data-toggle="tooltip" title="category"><%=category%></span>
-</h5>
-<h5 class="colors">pieces:
-<span class="" data-toggle="tooltip" title=""><%=pieces%></span>
-</h5>
-<p class="product-description"><span style="font-weight:bold;font-size:30px">Discription:</span><br><%=productDescription%></p>
-<p class="text-center"> <a href="/userlike/<%=sid%>" class="btn btn-danger btn-sm" style="color:#fff;font-size:20px;float:left display:inline">ADD<i class="fas fa-cart-plus"></i></a>
-<a href="tel:+919214555250" class="btn btn-primary">contact us</a>
-</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+
 <%- include("partials/footer"); -%>

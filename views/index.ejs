@@ -32,14 +32,16 @@
 <section id="items">
 <div class="row justify-content-center">
 <% sarees.forEach(function(saree) { %>
-<div class="col-6 col-md-4 pt-2 d-flex align-items-stretch">
-<div class="card" style="background-color:#faf4ff;height:30rem;border-radius:3%">
+<div class="col-6 col-md-4 pl-0 pr-0 d-flex align-items-stretch">
+<div class="card" style="background-color:#faf4ff;height:26.5rem;border-radius:0%;">
 <a href="/sarees/<%=saree._id%>"><img class="card-img-top" src="data:image/*;base64,<%=saree.img.data.toString('base64'); %> " alt="Saree image" style="width:100%"></a>
 <div class="card-body mt-0 pt-0">
-<a href="/sarees/<%=saree._id%>" style="color:#C71E17"><h5 class="pt-0 mt-0" style="color:#c71e17;text-align:center;font-weight:700"><%=saree.productName%> </h5></a>
-<p style="text-align:center;font-weight:500"><%=saree.productDescription.substring(0,20)+"" %></p>
-<h5 class="pt-4 ml-0" style="color:black;font-weight:500;display:inline">&#x20b9;<%=saree.prize%></h5>
-<a href="/userlike/<%=saree._id%>" style="color:#a83f39;font-size:20px;float:right">ADD<i class="fas fa-cart-plus"></i></a>
+<a href="/sarees/<%=saree._id%>" class="pb-0" style="color:black;white-space: nowrap; font-size:20px;padding:0px;margin:0px;"><p class="pt-0 mt-0"><%=saree.productName%> </p></a>
+<p class=" mt-n3" style="color:black;font-size:22px;font-weight:500;padding:0px;margin:0px;">&#x20b9;850<%=saree.prize%></p>
+<p class=" mt-0" style="font-weight:200;white-space: nowrap;font-size:22px;padding:0px;margin:0px;"><%=saree.productDescription.substring(0,20)+"..." %></p>
+ <a href="/userlike/<%=saree._id%>" style="color:#a83f39; font-size:20px; float:right">WishList <i class="fas fa-bookmark"></i></a>
+
+
 </div>
 </div>
 </div>

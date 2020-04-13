@@ -2,17 +2,19 @@
 <section id="items">
 <h2 class="pt-5 pb-5 text-center" style="text-align:center">Cart<i class="fas fa-shopping-cart fa-lg"></i></h2>
 <div class="row justify-content-center">
+
 <% sarees.forEach(function(saree) { %>
-<div class="col-6 col-md-4 pt-2 d-flex">
-<div class="card" style="background-color:#faf4ff;height:30rem;border-radius:3% width:100%">
+<div class="col-6 col-md-4 pl-0 pr-0 d-flex align-items-stretch">
+<div class="card" style="background-color:#faf4ff;height:29rem;border-radius:0%;">
 <a href="/sarees/<%=saree._id%>"><img class="card-img-top" src="data:image/*;base64,<%=saree.img.data.toString('base64'); %> " alt="Saree image" style="width:100%"></a>
 <div class="card-body mt-0 pt-0">
-<a href="/sarees/<%=saree._id%>" style="color:#C71E17"><h5 class="pt-0 mt-0" style="color:#c71e17;text-align:center;font-weight:700"><%=saree.productName%> </h5></a>
-<p style="text-align:center;font-weight:500"><%=saree.productDescription.substring(0,20) %></p>
-<h5 class="pt-4 ml-0" style="color:black;font-weight:500;display:inline">&#x20b9;<%=saree.prize%></h5>
-<a href="/delete/<%=saree._id%>" style="color:#a83f39;font-size:20px;float:right">Remove <i class="fas fa-trash-alt"></i></a>
+  <a href="/sarees/<%=saree._id%>" class="pb-0" style="color:black;white-space: nowrap; font-size:20px;padding:0px;margin:0px;"><p class="pt-0 mt-0"><%=saree.productName%> </p></a>
+  <p class="pt-0 mt-0" style="color:black;font-size:22px;font-weight:500;padding:0px;margin:0px;">&#x20b9;850<%=saree.prize%></p>
+  <p class="pt-0 mt-0" style="font-weight:200;white-space: nowrap;"><%=saree.productDescription.substring(0,20)+"..." %></p>
+  <a href="/delete/<%=saree._id%>" style="color:#a83f39;font-size:20px;float:right">Remove <i class="fas fa-trash-alt"></i></a>
+  <a href="tel:+919214555250" class="btn btn-dark">contact us</a>
+
 </div>
-<a href="tel:+919214555250" class="btn btn-dark">contact us</a>
 </div>
 </div>
 <% }) %>
