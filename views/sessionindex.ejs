@@ -8,9 +8,9 @@
 <div class="card" style="background-color:#fff;height:31rem;border-radius:0%;">
 <a href="/sarees/<%=saree._id%>"><img class="card-img-top" src="data:image/*;base64,<%=saree.img.data.toString('base64'); %> " alt="Saree image" style="width:100%"></a>
 <div class="card-body mt-0 pt-0">
-  <a href="/sarees/<%=saree._id%>" class="pb-0" style="color:black;white-space: nowrap; font-size:20px;padding:0px;margin:0px;"><p class="pt-0 mt-0"><%=saree.productName%> </p></a>
-  <p class="pt-0 mt-0" style="color:black;font-size:22px;font-weight:500;padding:0px;margin:0px;">&#x20b9;<%=saree.prize%></p>
-  <p class="pt-0 mt-0" style="font-weight:200;white-space: nowrap;"><%=saree.productDescription.substring(0,20)+"..." %></p>
+  <a href="/sarees/<%=saree._id%>" class="pb-0" style="color:black;white-space: nowrap; font-size:16px;padding-left:-5px;margin:0px;"><p class="pt-0 mt-0"><%=saree.productName%> </p></a>
+  <p class="pt-0 mt-0" style="color:black;font-size:20px;font-weight:500;padding-left:-5px;margin:0px;">&#x20b9;<%=saree.prize%></p>
+  <p class="pt-0 mt-0" style="font-weight:200;white-space: nowrap;padding-left:-5px;"><%=saree.productDescription.substring(0,20)+"..." %></p>
     <button href="/delete/<%=saree._id%>" style="color:#fff;" class="btn btn-danger btn-block">Remove <i class="fas fa-bookmark"></i></button>
     <button href="tel:+919214555250" class="btn btn-dark btn-block mb-0 pd-0 mt-1 pt-1" style="display:block;">contact us</button>
 
