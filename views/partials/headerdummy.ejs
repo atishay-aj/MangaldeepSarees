@@ -51,15 +51,15 @@ gtag('config', 'UA-162125041-2');
 <nav class="navbar justify-content-start sticky-top" style="border-bottom:1px solid grey;font-size:15px;background-color:#f4f4fa">
 <ul class=navbar-nav>
 <div id=mySidenav class=sidenav>
-<div class="dropdown">
-<button class="btn dropdown-toggle btn-primary" data-toggle="dropdown">
+<!-- <div class="dropdown"> -->
+<!-- <button class="btn dropdown-toggle btn-primary" data-toggle="dropdown">
 Account
 </button>
-<div class="dropdown-menu">
-<p class=dropdown-item><%= foundid %></p>
-<a class=dropdown-item href=/logout value="Log Out" style="background-color:#9A1F6E;border-radius:5%;font-size:1rem">Log Out</a>
-</div>
-</div>
+<div class="dropdown-menu"> -->
+<p class=dropdown-item style="visibility:hidden;"><%= foundid %></p>
+<button class="btn btn-danger" href=/logout value="Log Out" style="background-color:#9A1F6E;border-radius:5%;font-size:1rem">Log Out</button>
+<!-- </div>
+</div> -->
 <a href=/>Home</a>
 <a href=/contact>about</a>
 </div>
