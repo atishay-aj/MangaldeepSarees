@@ -1,44 +1,19 @@
 <%- include("partials/header"); -%>
-
-  <div class="container box rishabh text-center mt-4 mb-4" onclick="closeNav()" style="width:400px;">
-
-
-  <form class="text-center border border-light p-5" action="/login" method="post">
-
-      <p class="h4 mb-4">Sign In</p>
-
-      <!-- Email -->
-      <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" name="username" required>
-
-      <!-- Password -->
-      <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" name="password" required>
-
-      <div class="d-flex justify-content-around">
-          <div>
-              <!-- Remember me -->
-              <!-- <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
-                  <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
-              </div> -->
-          </div>
-          <div>
-              <!-- Forgot password -->
-              <!-- <a href="">Forgot password?</a> -->
-          </div>
-      </div>
-
-      <!-- Sign in button -->
-      <button class="btn btn-info btn-block my-4" type="submit">Sign In</button>
-
-      <!-- Register -->
-      <p>Not a member?
-          <a href="/register">Register</a>
-      </p>
-
-
-
-
-
-  </form>
-  </div>
-  <%- include("partials/footer"); -%>
+<div class="container box rishabh text-center mt-5 mb-5" onclick="closeNav()" style="width:100%">
+<form class="text-center border border-light p-5" action="/login" method="post">
+<p class="h4 mb-4">Sign In</p>
+<input id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" name="username" required>
+<input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" name="password" required>
+<div class="d-flex justify-content-around">
+<div>
+</div>
+<div>
+</div>
+</div>
+<button class="btn btn-info btn-block my-4" type="submit">Sign In</button>
+<p>Not a member?
+<a href="/register">Register</a>
+</p>
+</form>
+</div>
+<%- include("partials/footer"); -%>

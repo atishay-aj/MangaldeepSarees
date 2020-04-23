@@ -1,36 +1,30 @@
-//please put routes at their place like all get routes at a place
-//and comment out things so that everyone can easily understand code and edit it.
-// requiring all the packages
+const {
+  check,
+  validationResult
+} = require('express-validator');
+
 const express = require("express");
+const compression = require("compression");
 const bodyParser = require("body-parser");
 const ejs = require('ejs');
 const mongoose = require("mongoose");
 const session = require('express-session');
 const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
-const nodemailer = require('nodemailer');
+
 const fs = require('fs');
 const multer = require('multer');
-const Swal = require('sweetalert2');
-const crypto = require('crypto');
 
 var title;
-//multer for file upload
-const upload = multer({ dest: 'uploads/' })
-// creating app constant
+const upload = multer({
+    dest: 'uploads/'
+})
 const app = express();
-//using static css and image files which are in public folder
 app.use(express.static("public"));
-//view engine set ejs
 app.set('view engine', 'ejs');
-
-
-//body parser use
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
-
 app.use(session({
     secret: 'ourcompanysarsecret.',
     resave: false,
@@ -39,14 +33,13 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(compression());
+mongoose.connect("mongodb+srv://rjrishabh:rj7899Rishaabhjain@cluster0-ua7od.mongodb.net/mangaldeepDB", {
 
-//database connection
-mongoose.connect("mongodb://localhost:27017/mangaldeepDB", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
 });
-
 
 const userSchema = new mongoose.Schema({
     username: String,
@@ -62,13 +55,14 @@ const composeSchema = new mongoose.Schema({
     category: String,
     prize: String,
     pieces: String,
-    img: { data: Buffer, contentType: String }
+
+    img: {
+        data: Buffer,
+        contentType: String
+    }
 });
 const Saree = new mongoose.model("Saree", composeSchema);
 
-const itemsSchema = {
-    name: String
-};
 const listSchema = {
     name: String,
     items: [String]
@@ -76,9 +70,9 @@ const listSchema = {
 const Userlikes = new mongoose.model("Userlikes", listSchema);
 
 passport.use(User.createStrategy());
-
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
 
 var header = "";
 var header1 = "";
@@ -116,45 +110,48 @@ app.get("/compose", function(req, res) {
 })
 
 
+
 app.get("/contact", function(req, res) {
     if (req.isAuthenticated()) {
         header1 = 'headerdummy';
         foundid = req.user.username;
         title = 'MD-about'
-        res.render("about", { header: header1, foundid: foundid, titleOf: title });
+
+        res.render("about", {
+            header: header1,
+            foundid: foundid,
+            titleOf: title
+        });
     } else {
         header1 = 'header';
         title = 'MD-about'
-        res.render("about", { header: header1, titleOf: title });
+        res.render("about", {
+            header: header1,
+            titleOf: title
+        });
     }
-
-
 })
-
-// route for signup
-
 app.get("/register", function(req, res) {
-
     if (req.isAuthenticated()) {
-        res.redirect("/");
+        res.redirect("/user/" + req.user.username);
     } else {
         title = "Sign Up"
-        res.render("register", { titleOf: title });
+        res.render("register", {
+            titleOf: title,
+            errorMessage:null
+        });
     }
-
-
 });
-
 app.get("/login", function(req, res) {
     if (req.isAuthenticated()) {
-        res.redirect("/");
+        res.redirect("/user/" + req.user.username);
     } else {
         title = "MD-Sign In"
-        res.render("login", { titleOf: title });
+        res.render("login", {
+            titleOf: title
+        });
     }
-
 })
-
 app.get("/sarees/:sareeid", function(req, res) {
 
     var sareeimg;
@@ -163,7 +160,10 @@ app.get("/sarees/:sareeid", function(req, res) {
     var category;
     var prize;
     var pieces;
+
+    var sid;
     Saree.findById(req.params.sareeid, function(err, saree) {
+        sid = saree._id;
 
         sareeimg = saree.img.data.toString('base64');
         productName = saree.productName;
@@ -171,7 +171,6 @@ app.get("/sarees/:sareeid", function(req, res) {
         category = saree.category;
         prize = saree.prize;
         pieces = saree.pieces;
-        // console.log(productDescription);
 
         if (req.isAuthenticated()) {
             header1 = 'headerdummy';
@@ -187,10 +186,12 @@ app.get("/sarees/:sareeid", function(req, res) {
                 productDescription: productDescription,
                 category: category,
                 prize: prize,
-                pieces: pieces
+
+                pieces: pieces,
+                sid: sid
             });
         } else {
-            // console.log(productDescription);
+
             header1 = 'header';
             title = 'MD-productDes'
             res.render("productDes", {
@@ -201,49 +202,23 @@ app.get("/sarees/:sareeid", function(req, res) {
                 productDescription: productDescription,
                 category: category,
                 prize: prize,
-                pieces: pieces
+
+                pieces: pieces,
+                sid: sid
             });
         }
     })
-
-
 });
 
-// app.get("/userlike/:sareeid",function(req,res) {
-//   if (req.isAuthenticated()) {
-//     const user=req.user.username;
-//     const sareeid=req.params.sareeid;
-
-//     Userlikes.findOne({name:user},function(err,foundList) {
-//       if (!err) {
-//         if (!foundList) {
-//           const userlike = new Userlikes({
-//             name:user,
-//             items:[sareeid]
-//           });
-//           userlike.save();
-//           res.redirect("/");
-//         } else {
-//           foundList.items.push(sareeid);
-//           foundList.save();
-//           res.redirect("/");
-//         }
-//       } else {
-//         console.log(err);
-//       }
-
-//     })    
-
-//   } else {
-//     res.redirect("/register");
-//   }
-// })
 app.get("/userlike/:sareeid", function(req, res) {
     if (req.isAuthenticated()) {
         const user = req.user.username;
         const sareeid = req.params.sareeid;
 
-        Userlikes.findOne({ name: user }, function(err, foundList) {
+        Userlikes.findOne({
+            name: user
+        }, function(err, foundList) {
+
             if (!err) {
                 if (!foundList) {
                     const userlike = new Userlikes({
@@ -251,41 +226,36 @@ app.get("/userlike/:sareeid", function(req, res) {
                         items: [sareeid]
                     });
                     userlike.save();
-                    res.status(200).json({
-                        message: "Success"
-                    });
+
+                    res.redirect("/");
                 } else {
                     foundList.items.push(sareeid);
                     foundList.save();
-                    res.status(200).json({
-                        message: "Success"
-                    });
+                    res.redirect("/");
+
                 }
             } else {
                 console.log(err);
             }
 
         })
-
     } else {
         res.redirect("/register");
     }
 })
-
 app.get("/cart", function(req, res) {
     if (req.isAuthenticated()) {
         const user = req.user.username;
-        Userlikes.findOne({ name: user }, function(err, foundList) {
+        Userlikes.findOne({
+            name: user
+        }, function(err, foundList) {
             if (err) {
                 console.log(err);
                 res.redirect("/");
             } else {
                 try {
                     if (foundList.items) {
-
-                        console.log(foundList.items);
                         Saree.find().where('_id').in(foundList.items).exec((err, records) => {
-                            console.log(records);
                             res.render("sessionindex", {
                                 titleOf: 'MD-cart',
                                 foundid: foundList.name,
@@ -294,92 +264,88 @@ app.get("/cart", function(req, res) {
                         });
                     }
                 } catch (error) {
-                    res.redirect("/");
+                    res.render("empty", {
+                        titleOf: 'MD-emptyCart',
+                        foundid: req.user.username
+                    });
                 }
- }
-
+            }
         })
-
     } else {
         res.redirect("/login");
     }
 })
-
-app.get('/reset', function(req, res) {
-    res.render('forgotpassword');
-})
-app.post('/reset', function(req, res) {
-    crypto.randomBytes(32, function(err, buffer) {
-        const token = buffer.toString('hex');
+app.get("/delete/:deleteid", function(req, res) {
+    Userlikes.findOneAndUpdate({
+        name: req.user.username
+    }, {
+        $pull: {
+            items: req.params.deleteid
+        }
+    }, function(err, foundList) {
+        if (!err) {
+            if (foundList.items && foundList.items.constructor === Array && foundList.items.length === 0) {
+                res.render("empty", {
+                    titleOf: 'MD-emptyCart',
+                    foundid: req.user.username
+                });
+            } else {
+                res.redirect("/cart");
+            }
+        }
     })
-})
-
-//post route for any form  all post routes here
-app.post("/register", function(req, res) {
-    User.findOne({ username: req.body.username }, function(err, user) {
+});
+app.post("/register",[
+      check('username').isEmail(),
+      check('password').isLength({
+        min: 5
+      })
+    ], function(req, res) {
+    User.findOne({
+        username: req.body.username
+    }, function(err, user) {
         if (!err) {
             if (user) {
-                
                 res.redirect("/login");
             } else {
-
-                User.register({ username: req.body.username }, req.body.password, function(err, user) {
+                User.register({
+                    username: req.body.username
+                }, req.body.password, function(err, user) {
                     if (err) {
                         console.log(err);
                         res.redirect("/register");
                     } else {
                         passport.authenticate("local")(req, res, function() {
-                            res.redirect("/");
+                            res.redirect("/user/" + req.body.username);
                         })
                     }
                 })
-
             }
         } else if (err) {
             console.log(err);
         }
     })
-
 });
-
 app.post("/login", function(req, res) {
     const user = new User({
         username: req.body.username,
         password: req.body.password
     });
-    // req.login(user,function(err) {
-    //   if(err){
-    //     console.log(err);
-    //   }else{
     passport.authenticate("local")(req, res, function() {
-        res.redirect("/");
+        res.redirect("/user/" + req.body.username);
     });
-    // }
-    // })
 });
-
 app.get("/logout", function(req, res) {
     req.logout();
     req.session.destroy(function(err) {
         res.redirect("/login");
     })
-
 });
-
 app.post("/compose", upload.single('img'), function(req, res) {
-    if (req.file == null || req.file.mimetype != 'image/*') {
-        console.log(req.file.mimetype);
-        // If Submit was accidentally clicked with no file selected...
-        console.log("no img selected");
-        res.render("compose", { titleOf: title });
-        fs.unlinkSync(req.file.path, function(err) {
-            if (err) { console.log(err) };
-        })
+    if (req.file == null) {
+        res.render("compose");
     } else {
-
-        // read the img file from tmp in-memory location
         const newImg = fs.readFileSync(req.file.path);
-        console.log(newImg);
 
         const saree = new Saree({
             _id: req.body.productId,
@@ -390,22 +356,14 @@ app.post("/compose", upload.single('img'), function(req, res) {
             pieces: req.body.pieces
 
         });
-        saree.img.data = newImg,
-            saree.img.contentType = 'image/*'
+        saree.img.data = newImg, saree.img.contentType = 'image/*'
         Saree.findById(req.body.productId, function(err, sareefound) {
             if (sareefound) {
-
                 res.redirect("/");
             } else {
-
                 saree.save(function(err) {
                     if (!err) {
-
-                        // fs.unlinkSync(req.file.path,function(err) {
-                        //   if(err){ console.log(err) };
-                        // })
                         res.redirect("/compose");
-
 
                     } else {
                         console.log(err);
@@ -415,18 +373,17 @@ app.post("/compose", upload.single('img'), function(req, res) {
         })
 
         fs.unlinkSync(req.file.path, function(err) {
-            if (err) { console.log(err) };
+            if (err) {
+                console.log(err)
+            };
         })
     }
 });
-
-
-app.use((req, res, next) => {
-    console.log(req.status);
-    res.status(401).send("<h1>user not exists</h1>")
-})
-
-//listen port
-app.listen(4000, function() {
-    console.log("server is up and running on port 4000");
+let port = process.env.PORT;
+if (port == null || port == "") {
+    port = 4000;
+}
+app.listen(port, function() {
+    console.log("server is up and running successfully");
 });
+
