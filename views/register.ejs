@@ -3,6 +3,9 @@
 <div class="container rishabh box text-center mt-5 mb-5" style="width:100%" onclick="closeNav()">
 <form class="text-center border border-light p-5" action="/register" method="post">
 <p class="h4 mb-4">Sign up</p>
+<% if(errorMessage){ %>
+<p> <%=errorMessage%></p>
+<%  } %>
 <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" name="username" required autocomplete="off">
 <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Create Password" name="password" required minlength="8">
 <button class="btn btn-info btn-block my-4" type="submit">Sign up</button>
