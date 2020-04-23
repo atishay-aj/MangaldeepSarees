@@ -48,7 +48,9 @@
               <a href="/sarees/<%=saree._id%>" style="color:#C71E17;"><h5 class="pt-0 mt-0" style="color:#C71E17;text-align: center; font-weight:700"><%=saree.productName%> </h5></a>
             <p style="text-align:center;font-weight:500;"><%=saree.productDescription.substring(0,30)+"..." %></p>
 
-            <h3 style="color:black;font-weight:500;">&#x20b9;<%=saree.prize%>  <a href="/userlike/<%=saree._id%>" style="color:#a83f39; font-size:25px; float:right">Like <i class="fas fa-heart" ></i></a></h3>
+            <h3 style="color:black;font-weight:500;">&#x20b9;<%=saree.prize%>  <!-- <a href="/userlike/<%=saree._id%>" style="color:#a83f39; font-size:25px; float:right">Like <i class="fas fa-heart" ></i></a> --><button onclick="addproduct(this)" value="<%=saree._id%>" style="color:#a83f39; font-size:25px; float:right" >Add to<i class="fas fa-cart-plus" ></i></button>
+              
+            </h3>
 
 
 
@@ -62,3 +64,4 @@
 </section>
 
 <%- include("partials/footer"); -%>
+<script type="text/javascript" src="/js/js.js"></script>
