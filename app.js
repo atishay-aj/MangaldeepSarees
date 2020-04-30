@@ -34,8 +34,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(compression());
-mongoose.connect("mongodb+srv://rjrishabh:rj7899Rishaabhjain@cluster0-ua7od.mongodb.net/mangaldeepDB", {
-
+mongoose.connect(process.env.mongoconnection, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
