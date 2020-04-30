@@ -11,8 +11,10 @@ const mongoose = require("mongoose");
 const session = require('express-session');
 const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
+
 const fs = require('fs');
 const multer = require('multer');
+
 var title;
 const upload = multer({
     dest: 'uploads/'
@@ -28,6 +30,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(compression());
@@ -36,12 +39,14 @@ mongoose.connect(process.env.mongoconnection, {
     useUnifiedTopology: true,
     useCreateIndex: true
 });
+
 const userSchema = new mongoose.Schema({
     username: String,
     password: String
 });
 userSchema.plugin(passportLocalMongoose);
 const User = new mongoose.model('User', userSchema);
+
 const composeSchema = new mongoose.Schema({
     _id: String,
     productName: String,
@@ -49,94 +54,68 @@ const composeSchema = new mongoose.Schema({
     category: String,
     prize: String,
     pieces: String,
+
     img: {
         data: Buffer,
         contentType: String
     }
 });
 const Saree = new mongoose.model("Saree", composeSchema);
+
 const listSchema = {
     name: String,
     items: [String]
 };
 const Userlikes = new mongoose.model("Userlikes", listSchema);
+
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+
 var header = "";
 var header1 = "";
+//home route please put all get routes at a placeapp.get("/",function(req,res,next){
+
 app.get("/", function(req, res) {
-    if (req.isAuthenticated()) {
-        res.redirect("/user/" + req.user.username);
+    title = "MD-Home";
+    const currentPage=req.query.page || 1;
+    const perpage =4;
+    let total;
+    Saree.countDocuments({}, function (err, count) {
+  console.log('there are %d sarees', count);
+});
+    Saree.find().skip((currentPage-1)*perpage).limit(perpage).exec( function(err, sarees) {
+        if (err) {
+            console.log(err);
+        } else {
+            if (req.isAuthenticated()) {
+        console.log(req.user.username);
+        res.render("index", { header: 'headerdummy', foundid: req.user.username, sarees: sarees, titleOf: title });
+
     } else {
-        title = "MD-Sarees";
-        Saree.find({}, function(err, sarees) {
-            if (err) {
-                console.log(err);
-            } else {
-                header = 'header'
-                res.render("index", {
-                    header: header,
-                    sarees: sarees,
-                    titleOf: title
-                });
+                // const base64=saree.img.data.toString('base64');
+                res.render("index", { header: 'header', sarees: sarees, titleOf: title });
+             }
+            
             }
-        })
-    }
-})
-app.get("/user/:query", function(req, res) {
-    if (req.isAuthenticated()) {
-        const userid = req.params.query;
-        User.findOne({
-            username: userid
-        }, function(err, user) {
-            if (!err) {
-                if (user) {
-                    var foundid = user.username;
-                    header1 = 'headerdummy';
-                    title = "MD-Home";
-                    Saree.find({}, function(err, sarees) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            if (header1 == 'headerdummy') {
-                                res.render("index", {
-                                    header: header1,
-                                    foundid: foundid,
-                                    sarees: sarees,
-                                    titleOf: title
-                                });
-                            } else {
-                                res.render("index", {
-                                    header: header1,
-                                    sarees: sarees,
-                                    titleOf: title
-                                });
-                            }
-                        }
-                    })
-                } else {
-                    res.redirect("/login");
-                }
-            } else {
-                console.log(err);
-            }
-        })
-    } else {
-        res.redirect("/login");
-    }
-})
+    })
+});
+
+
 app.get("/compose", function(req, res) {
     title = "MD-Add Products";
-    res.render("compose", {
-        titleOf: title
-    });
+    res.render("compose", { titleOf: title });
 })
+
+
+
 app.get("/contact", function(req, res) {
     if (req.isAuthenticated()) {
         header1 = 'headerdummy';
         foundid = req.user.username;
         title = 'MD-about'
+
         res.render("about", {
             header: header1,
             foundid: foundid,
@@ -153,7 +132,7 @@ app.get("/contact", function(req, res) {
 })
 app.get("/register", function(req, res) {
     if (req.isAuthenticated()) {
-        res.redirect("/user/" + req.user.username);
+        res.redirect("/");
     } else {
         title = "Sign Up"
         res.render("register", {
@@ -164,7 +143,7 @@ app.get("/register", function(req, res) {
 });
 app.get("/login", function(req, res) {
     if (req.isAuthenticated()) {
-        res.redirect("/user/" + req.user.username);
+        res.redirect("/");
     } else {
         title = "MD-Sign In"
         res.render("login", {
@@ -173,25 +152,30 @@ app.get("/login", function(req, res) {
     }
 })
 app.get("/sarees/:sareeid", function(req, res) {
+
     var sareeimg;
     var productName;
     var productDescription;
     var category;
     var prize;
     var pieces;
+
     var sid;
     Saree.findById(req.params.sareeid, function(err, saree) {
         sid = saree._id;
+
         sareeimg = saree.img.data.toString('base64');
         productName = saree.productName;
         productDescription = saree.productDescription;
         category = saree.category;
         prize = saree.prize;
         pieces = saree.pieces;
+
         if (req.isAuthenticated()) {
             header1 = 'headerdummy';
             foundid = req.user.username;
             title = 'MD-productDes';
+
             res.render("productDes", {
                 header: header1,
                 foundid: foundid,
@@ -201,10 +185,12 @@ app.get("/sarees/:sareeid", function(req, res) {
                 productDescription: productDescription,
                 category: category,
                 prize: prize,
+
                 pieces: pieces,
                 sid: sid
             });
         } else {
+
             header1 = 'header';
             title = 'MD-productDes'
             res.render("productDes", {
@@ -215,19 +201,23 @@ app.get("/sarees/:sareeid", function(req, res) {
                 productDescription: productDescription,
                 category: category,
                 prize: prize,
+
                 pieces: pieces,
                 sid: sid
             });
         }
     })
 });
+
 app.get("/userlike/:sareeid", function(req, res) {
     if (req.isAuthenticated()) {
         const user = req.user.username;
         const sareeid = req.params.sareeid;
+
         Userlikes.findOne({
             name: user
         }, function(err, foundList) {
+
             if (!err) {
                 if (!foundList) {
                     const userlike = new Userlikes({
@@ -235,15 +225,18 @@ app.get("/userlike/:sareeid", function(req, res) {
                         items: [sareeid]
                     });
                     userlike.save();
+
                     res.redirect("/");
                 } else {
                     foundList.items.push(sareeid);
                     foundList.save();
                     res.redirect("/");
+
                 }
             } else {
                 console.log(err);
             }
+
         })
     } else {
         res.redirect("/register");
@@ -322,7 +315,7 @@ app.post("/register",[
                         res.redirect("/register");
                     } else {
                         passport.authenticate("local")(req, res, function() {
-                            res.redirect("/user/" + req.body.username);
+                            res.redirect("/");
                         })
                     }
                 })
@@ -338,7 +331,7 @@ app.post("/login", function(req, res) {
         password: req.body.password
     });
     passport.authenticate("local")(req, res, function() {
-        res.redirect("/user/" + req.body.username);
+        res.redirect("/");
     });
 });
 app.get("/logout", function(req, res) {
@@ -352,6 +345,7 @@ app.post("/compose", upload.single('img'), function(req, res) {
         res.render("compose");
     } else {
         const newImg = fs.readFileSync(req.file.path);
+
         const saree = new Saree({
             _id: req.body.productId,
             productName: req.body.productName,
@@ -359,6 +353,7 @@ app.post("/compose", upload.single('img'), function(req, res) {
             category: req.body.category,
             prize: req.body.prize,
             pieces: req.body.pieces
+
         });
         saree.img.data = newImg, saree.img.contentType = 'image/*'
         Saree.findById(req.body.productId, function(err, sareefound) {
@@ -368,12 +363,14 @@ app.post("/compose", upload.single('img'), function(req, res) {
                 saree.save(function(err) {
                     if (!err) {
                         res.redirect("/compose");
+
                     } else {
                         console.log(err);
                     }
                 });
             }
         })
+
         fs.unlinkSync(req.file.path, function(err) {
             if (err) {
                 console.log(err)
@@ -388,3 +385,4 @@ if (port == null || port == "") {
 app.listen(port, function() {
     console.log("server is up and running successfully");
 });
+

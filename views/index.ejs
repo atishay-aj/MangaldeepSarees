@@ -30,6 +30,7 @@
 </div>
 </section> -->
 <section id="items">
+
 <div class="row justify-content-center">
 <% sarees.forEach(function(saree) { %>
 <div class="col-6 col-md-4 pl-0 pr-0 d-flex align-items-stretch">
@@ -39,7 +40,7 @@
 <a href="/sarees/<%=saree._id%>" class="pb-0" style="color:black;white-space: nowrap; font-size:16px;padding-left:-10px;margin:0px;"><p class="pt-0 mt-0"><%=saree.productName%> </p></a>
 <p class=" mt-n3" style="color:black;font-size:20px;font-weight:500;padding-left:-10px;margin:0px;">&#x20b9;<%=saree.prize%></p>
 <p class=" mt-0" style="font-weight:200;white-space: nowrap;font-size:16px;padding-left:-10px;margin:0px;"><%=saree.productDescription.substring(0,15)+"..." %></p>
- <a href="/userlike/<%=saree._id%>" style="color:#9A1F6E; font-size:20px; float:right">WishList <i class="fas fa-bookmark"></i></a>
+ <a href="/userlike/<%=saree._id%>" style="color:#9A1F6E; font-size:20px; float:right">WishList <i class="fas fa-bookmark"></i></a><button onclick="addproduct(this)" value="<%=saree._id%>" style="color:#a83f39; font-size:25px; float:right" >Add to<i class="fas fa-cart-plus" ></i></button>
 
 
 </div>
@@ -47,5 +48,7 @@
 </div>
 <% }) %>
 </div>
+
 </section>
 <%- include("partials/footer"); -%>
+<script type="text/javascript" src="/js/js.js"></script>
