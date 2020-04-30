@@ -133,7 +133,7 @@ app.get("/contact", function(req, res) {
 })
 app.get("/register", function(req, res) {
     if (req.isAuthenticated()) {
-        res.redirect("/user/" + req.user.username);
+        res.redirect("/");
     } else {
         title = "Sign Up"
         res.render("register", {
@@ -144,7 +144,7 @@ app.get("/register", function(req, res) {
 });
 app.get("/login", function(req, res) {
     if (req.isAuthenticated()) {
-        res.redirect("/user/" + req.user.username);
+        res.redirect("/");
     } else {
         title = "MD-Sign In"
         res.render("login", {
@@ -316,7 +316,7 @@ app.post("/register",[
                         res.redirect("/register");
                     } else {
                         passport.authenticate("local")(req, res, function() {
-                            res.redirect("/user/" + req.body.username);
+                            res.redirect("/");
                         })
                     }
                 })
@@ -332,7 +332,7 @@ app.post("/login", function(req, res) {
         password: req.body.password
     });
     passport.authenticate("local")(req, res, function() {
-        res.redirect("/user/" + req.body.username);
+        res.redirect("/");
     });
 });
 app.get("/logout", function(req, res) {
